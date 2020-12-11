@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.member.mapper.ConsumptRecordMapper">
+    <resultMap id="CaseResultMap" type="org.jeecg.modules.member.vo.ConsumptRecordVo">
+        <result column="id" property="id"/>
+        <result column="member_id" property="memberId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="consumption_items_id" property="conItem"/>
+        <result column="employee_id" property="employeeId"/>
+        <result column="consumt_amount" property="consumtAmount"/>
+        <result column="consumption_time" property="consumptionTime"/>
+        <result column="memberName" property="memberName"/>
+        <result column="conItemName" property="consumpName"/>
+        <result column="employeeName" property="employeeName"/>
+        <result column="consumt_way" property="payWay"/>
+    </resultMap>
+    <!-- 根据用户名查询 -->
+    <select id="queryPageList" resultMap="CaseResultMap">
+        SELECT
+        mcr.*,
+        mm.NAME AS memberName,
+        mci.content AS conItemName,
+        me.NAME AS employeeName
+        FROM
+        consumpt_record mcr
+        LEFT JOIN me_member mm ON mcr.member_id = mm.id
+        LEFT JOIN consumption_items mci ON mcr.consumption_items_idd = mci.id
+        LEFT JOIN me_mployee me ON mcr.employee_id = me.id
+        <if test=" consumptRecordVo.memberId != null and  consumptRecordVo.memberId!= 0">
+            and mm.id = #{consumptRecordVo.memberId}
+        </if>
+        <if test="consumptRecordVo.employeeId != null and consumptRecordVo.employeeId!= 0">
+            and mcr.employee_id  = #{consumptRecordVo.employeeId}
+        </if>
+
+    </select>
+</mapper>
