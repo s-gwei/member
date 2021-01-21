@@ -4,3 +4,5 @@ server:
 spring:
   application:
     name: jeecg-system
+  profiles:
+      active: dev
