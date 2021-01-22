@@ -74,6 +74,7 @@ public class MeMemberServiceImpl extends ServiceImpl<MeMemberMapper, MeMember> i
                 meEmployeeCommission.setEmployeeId(meMemberVo.getEmployeeId());
                 meEmployeeCommission.setCreateTime(date);
                 meEmployeeCommission.setConsumptRecordId(meRechargeRecord.getId());
+                meEmployeeCommission.setMemberId(member.getId());
                 meEmployeeCommission.setCommissionAmount(meRechargeRecord.getRechargeAmount()/50);
                 meEmployeeCommissionMapper.insert(meEmployeeCommission);
                 result.setSuccess(true);

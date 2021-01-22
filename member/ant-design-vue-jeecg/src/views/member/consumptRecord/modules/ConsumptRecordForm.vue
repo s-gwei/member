@@ -31,6 +31,7 @@
                     </a-select>
             </a-form-item>
           </a-col> 
+          
              <a-col :md="14" :sm="16">
            <a-form-item label="项目名称">
                     <a-select  name="projectNameList" v-decorator="['consumptionItemsIdd']" placeholder="请选择消费项目">

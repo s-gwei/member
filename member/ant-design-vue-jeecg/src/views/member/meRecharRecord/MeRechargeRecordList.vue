@@ -124,9 +124,9 @@
             }
           },
           {
-            title:'会员id',
+            title:'会员姓名',
             align:"center",
-            dataIndex: 'memberId'
+            dataIndex: 'memberName'
           },
           {
             title:'充值金额',
@@ -139,9 +139,14 @@
             dataIndex: 'rechargeMode'
           },
           {
-            title:'销售员工id',
+            title:'销售员工',
             align:"center",
-            dataIndex: 'employeeId'
+            dataIndex: 'employeeName'
+          },
+          {
+            title:'充值时间',
+            align:"center",
+            dataIndex: 'createTime'
           },
           {
             title: '操作',

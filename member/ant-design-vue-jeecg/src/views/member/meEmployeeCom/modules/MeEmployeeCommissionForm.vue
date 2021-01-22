@@ -4,40 +4,35 @@
       <a-form :form="form" slot="detail">
         <a-row>
           <a-col :span="24">
-            <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['name']" placeholder="请输入姓名"  ></a-input>
+            <a-form-item label="员工id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['employeeId']" placeholder="请输入员工id"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="手机号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['phone']" placeholder="请输入手机号"  ></a-input>
+            <a-form-item label="消费项目" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['consumptionItemsId']" placeholder="请输入消费项目" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="充值金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['balance']" placeholder="请输入充值金额" style="width: 100%" />
+            <a-form-item label="提成金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['commissionAmount']" placeholder="请输入提成金额" style="width: 100%" />
             </a-form-item>
           </a-col>
-               <a-col :span="12">
-         <a-form-item label="支付方式" >
-                    <a-select  name="projectNameList" v-decorator="['consumtWay']" placeholder="请选择支付方式">
-                        <a-select-option value="">请选择</a-select-option>
-                        <a-select-option v-for="item in payWay" :key="item.name" :value="item.name"> {{item.name}}</a-select-option>
-                    </a-select>
+          <a-col :span="24">
+            <a-form-item label="充值记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['rechargeRecordId']" placeholder="请输入充值记录"  ></a-input>
             </a-form-item>
-         </a-col>
-           <a-col :span="12">
-            <!-- <a-form-item label="员工表下拉">
-              <j-dict-select-tag v-model="employee" placeholder="请选择用户" v-dictCode="['id']" />
-            </a-form-item> -->
-            <a-form-item label="充值员工">
-                    <a-select  name="projectNameList" v-decorator="['employeeId']" placeholder="请选择员工">
-                        <a-select-option value="">请选择</a-select-option>
-                        <a-select-option v-for="item in employee" :value="item.id" :key="item.id"> {{item.name}}</a-select-option>
-                    </a-select>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="消费记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['consumptRecordId']" placeholder="请输入消费记录"  ></a-input>
             </a-form-item>
-          </a-col> 
-      
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="会员id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['memberId']" placeholder="请输入会员id"  ></a-input>
+            </a-form-item>
+          </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
             <a-button @click="submitForm">提 交</a-button>
           </a-col>
@@ -53,10 +48,9 @@
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
   import JFormContainer from '@/components/jeecg/JFormContainer'
-  import JSearchSelectTag from '@/components/dict/JSearchSelectTag'
 
   export default {
-    name: 'MeMemberForm',
+    name: 'MeEmployeeCommissionForm',
     components: {
       JFormContainer,
     },
@@ -83,14 +77,7 @@
     data () {
       return {
         form: this.$form.createForm(this),
-        employee:{},
-        employeeId:'',
         model: {},
-        payWay:[
-          {name: "支付宝"},
-          {name: "微信"},
-          {name: "其他"}
-        ],
         labelCol: {
           xs: { span: 24 },
           sm: { span: 5 },
@@ -103,10 +90,9 @@
         validatorRules: {
         },
         url: {
-          add: "/member/meMember/add",
-          edit: "/member/meMember/edit",
-          queryById: "/member/meMember/queryById",
-          queryEmployInfo:"/member/meMployee/queryEmployInfo"
+          add: "/member/meEmployeeCommission/add",
+          edit: "/member/meEmployeeCommission/edit",
+          queryById: "/member/meEmployeeCommission/queryById"
         }
       }
     },
@@ -132,21 +118,9 @@
     created () {
       //如果是流程中表单，则需要加载流程表单data
       this.showFlowData();
-      //获取员工信息
-      this.queryEmployInfo();
     },
     methods: {
-      queryEmployInfo(){
-          let formData = {};
-          let httpurl = this.url.queryEmployInfo;
-          let   method = 'get';
-          httpAction(httpurl,formData,method).then((res)=>{
-                this.employee = res.result;
-                console.info(this.employee)
-            })
-      },
       add () {
-        console.info(this.selectId);
         this.edit({});
       },
       edit (record) {
@@ -154,7 +128,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','phone','balance',this.selectId))
+          this.form.setFieldsValue(pick(this.model,'employeeId','consumptionItemsId','commissionAmount','rechargeRecordId','consumptRecordId','memberId'))
         })
       },
       //渲染流程表单数据
@@ -200,7 +174,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','phone','balance'))
+        this.form.setFieldsValue(pick(row,'employeeId','consumptionItemsId','commissionAmount','rechargeRecordId','consumptRecordId','memberId'))
       },
     }
   }

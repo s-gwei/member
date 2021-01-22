@@ -8,17 +8,17 @@
         <result column="employee_id" property="employeeId"/>
         <result column="memberName" property="memberName"/>
         <result column="employeeName" property="employeeName"/>
-        <result column="consumt_way" property="rechargeMode"/>
+        <result column="recharge_mode" property="rechargeMode"/>
     </resultMap>
     <!-- 根据用户名查询 -->
     <select id="queryPageList" resultMap="CaseResultMap">
-        SELECT
-	*
+SELECT
+	me_recharge_record.*,me_member.`name` as memberName,me_mployee.`name` as employeeName
 FROM
-	me_recharge_record  left join
-	me_member on  me_recharge_record.member_id = me_member.id
+	me_recharge_record left join
+	me_member  on  me_recharge_record.member_id = me_member.id
 	left join
-	me_mployee on me_recharge_record.emloyee_id=me_mployee.id
+	me_mployee on me_recharge_record.employee_id=me_mployee.id
 
     </select>
 </mapper>

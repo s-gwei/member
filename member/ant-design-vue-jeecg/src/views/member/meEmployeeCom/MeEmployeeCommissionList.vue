@@ -12,7 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('会员表')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('员工提成表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -89,7 +89,7 @@
       </a-table>
     </div>
 
-    <me-member-modal ref="modalForm" @ok="modalFormOk"></me-member-modal>
+    <me-employee-commission-modal ref="modalForm" @ok="modalFormOk"></me-employee-commission-modal>
   </a-card>
 </template>
 
@@ -98,19 +98,19 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import MeMemberModal from './modules/MeMemberModal'
+  import MeEmployeeCommissionModal from './modules/MeEmployeeCommissionModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
-    name: 'MeMemberList',
+    name: 'MeEmployeeCommissionList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      MeMemberModal,
+      MeEmployeeCommissionModal,
       JSuperQuery,
     },
     data () {
       return {
-        description: '会员表管理页面',
+        description: '员工提成表管理页面',
         // 表头
         columns: [
           {
@@ -124,30 +124,41 @@
             }
           },
           {
-            title:'姓名',
+            title:'员工',
             align:"center",
-            dataIndex: 'name'
+            dataIndex: 'employeeName'
           },
           {
-            title:'手机号',
+            title:'消费项目',
             align:"center",
-            dataIndex: 'phone'
+            dataIndex: 'itemName'
           },
           {
-            title:'充值金额',
+            title:'提成金额',
             align:"center",
-            dataIndex: 'balance'
+            dataIndex: 'commissionAmount'
           },
-              {
-            title:'创建时间',
+       
+          {
+            title:'会员',
+            align:"center",
+            dataIndex: 'memberName'
+          },
+            {
+            title:'消费时间',
             align:"center",
             dataIndex: 'createTime'
           },
-          {
-            title:'更新时间',
-            align:"center",
-            dataIndex: 'updateTime'
-          },
+          //    {
+          //   title:'充值记录',
+          //   align:"center",
+          //   dataIndex: 'rechargeRecordId'
+          // },
+          // {
+          //   title:'消费记录',
+          //   align:"center",
+          //   dataIndex: 'consumptRecordId'
+          // },
           {
             title: '操作',
             dataIndex: 'action',
@@ -158,11 +169,11 @@
           }
         ],
         url: {
-          list: "/member/meMember/list",
-          delete: "/member/meMember/delete",
-          deleteBatch: "/member/meMember/deleteBatch",
-          exportXlsUrl: "/member/meMember/exportXls",
-          importExcelUrl: "member/meMember/importExcel",
+          list: "/member/meEmployeeCommission/list",
+          delete: "/member/meEmployeeCommission/delete",
+          deleteBatch: "/member/meEmployeeCommission/deleteBatch",
+          exportXlsUrl: "/member/meEmployeeCommission/exportXls",
+          importExcelUrl: "member/meEmployeeCommission/importExcel",
           
         },
         dictOptions:{},
@@ -182,9 +193,12 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'name',text:'姓名',dictCode:''})
-        fieldList.push({type:'string',value:'phone',text:'手机号',dictCode:''})
-        fieldList.push({type:'double',value:'balance',text:'余额',dictCode:''})
+        fieldList.push({type:'string',value:'employeeId',text:'员工id',dictCode:''})
+        fieldList.push({type:'int',value:'consumptionItemsId',text:'消费项目',dictCode:''})
+        fieldList.push({type:'double',value:'commissionAmount',text:'提成金额',dictCode:''})
+        fieldList.push({type:'string',value:'rechargeRecordId',text:'充值记录',dictCode:''})
+        fieldList.push({type:'string',value:'consumptRecordId',text:'消费记录',dictCode:''})
+        fieldList.push({type:'string',value:'memberId',text:'会员id',dictCode:''})
         this.superFieldList = fieldList
       }
     }
