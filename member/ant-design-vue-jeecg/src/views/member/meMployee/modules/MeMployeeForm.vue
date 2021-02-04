@@ -4,33 +4,23 @@
       <a-form :form="form" slot="detail">
         <a-row>
           <a-col :span="24">
-            <a-form-item label="员工id" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show = false>
-              <a-input v-decorator="['employeeId']" placeholder="请输入员工id"  ></a-input>
+            <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['name']" placeholder="请输入姓名"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="消费项目" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['consumptionItemsId']" placeholder="请输入消费项目" style="width: 100%" />
+            <a-form-item label="电话" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['phone']" placeholder="请输入电话"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="提成金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['commissionAmount']" placeholder="请输入提成金额" style="width: 100%" />
+            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['sex']" placeholder="请输入性别"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="充值记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['rechargeRecordId']" placeholder="请输入充值记录"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item label="消费记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['consumptRecordId']" placeholder="请输入消费记录"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item label="会员id" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show = false>
-              <a-input v-decorator="['memberId']" placeholder="请输入会员id"  ></a-input>
+            <a-form-item label="地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['address']" placeholder="请输入地址"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -50,7 +40,7 @@
   import JFormContainer from '@/components/jeecg/JFormContainer'
 
   export default {
-    name: 'MeEmployeeCommissionForm',
+    name: 'MeMployeeForm',
     components: {
       JFormContainer,
     },
@@ -90,9 +80,9 @@
         validatorRules: {
         },
         url: {
-          add: "/member/meEmployeeCommission/add",
-          edit: "/member/meEmployeeCommission/edit",
-          queryById: "/member/meEmployeeCommission/queryById"
+          add: "/member/meMployee/add",
+          edit: "/member/meMployee/edit",
+          queryById: "/member/meMployee/queryById"
         }
       }
     },
@@ -128,7 +118,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'employeeId','consumptionItemsId','commissionAmount','rechargeRecordId','consumptRecordId','memberId'))
+          this.form.setFieldsValue(pick(this.model,'name','phone','sex','address'))
         })
       },
       //渲染流程表单数据
@@ -174,7 +164,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'employeeId','consumptionItemsId','commissionAmount','rechargeRecordId','consumptRecordId','memberId'))
+        this.form.setFieldsValue(pick(row,'name','phone','sex','address'))
       },
     }
   }

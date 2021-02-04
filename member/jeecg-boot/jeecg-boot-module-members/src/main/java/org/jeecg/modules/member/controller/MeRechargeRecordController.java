@@ -13,6 +13,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.member.entity.MeRechargeRecord;
+import org.jeecg.modules.member.entity.RecordVo;
+import org.jeecg.modules.member.entity.SaleCur12Vo;
 import org.jeecg.modules.member.service.IMeRechargeRecordService;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -65,9 +67,18 @@ public class MeRechargeRecordController extends JeecgController<MeRechargeRecord
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(MeRechargeRecordVo meRechargeRecordVo,
 								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize) {
+								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+								   HttpServletRequest req) {
 		Page<MeRechargeRecordVo> page = new Page<MeRechargeRecordVo>(pageNo, pageSize);
-		IPage<MeRechargeRecordVo> pageList = meRechargeRecordService.queryPageList(page, meRechargeRecordVo);
+		Map map = req.getParameterMap();
+		String startTime = "";
+		String endTime = "";
+		if(map.get("createTime_begin") !=null){
+			System.out.println(map.get("createTime_begin"));
+			startTime = ((String[]) map.get("createTime_begin"))[0]+" 00:00:00";
+			endTime = ((String[]) map.get("createTime_end"))[0]+" 23:59:59";
+		}
+		IPage<MeRechargeRecordVo> pageList = meRechargeRecordService.queryPageList(page, meRechargeRecordVo,startTime,endTime);
 		return Result.OK(pageList);
 	}
 	
@@ -167,4 +178,26 @@ public class MeRechargeRecordController extends JeecgController<MeRechargeRecord
         return super.importExcel(request, response, MeRechargeRecord.class);
     }
 
-}
+	 /**
+	  * 查询当日销售额信息
+	  */
+	 @RequestMapping(value = "/recordInfo", method = RequestMethod.GET)
+	 public Result<?> recordInfo() {
+	 	 RecordVo recordVo = meRechargeRecordService.recordInfo();
+		 return Result.OK(recordVo);
+	 }
+
+	 /**
+	  * 查询最近12个月进账
+	  *
+	  * @return
+	  */
+	 @AutoLog(value = "出货订单表-最近12个月销售数据")
+	 @ApiOperation(value="出货订单表-最近12个月销售数据", notes="出货订单表-最近12个月销售数据")
+	 @GetMapping(value = "/queryCur12Total")
+	 public Result<?> queryCur12Total() {
+		 List<SaleCur12Vo> saleCur12Vo = meRechargeRecordService.queryCur12Total();
+		 //计算毛利润
+		 return Result.OK(saleCur12Vo);
+	 }
+ }

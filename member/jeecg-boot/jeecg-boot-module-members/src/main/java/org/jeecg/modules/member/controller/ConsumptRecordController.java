@@ -64,9 +64,18 @@ public class ConsumptRecordController extends JeecgController<ConsumptRecord, IC
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(ConsumptRecordVo consumptRecordVo,
 								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize) {
+								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+								   HttpServletRequest req) {
 		Page<ConsumptRecordVo> page = new Page<ConsumptRecordVo>(pageNo, pageSize);
-		IPage<ConsumptRecordVo> pageList = consumptRecordService.queryPageList(page, consumptRecordVo);
+		Map map = req.getParameterMap();
+		String startTime = "";
+		String endTime = "";
+		if(map.get("createTime_begin") !=null){
+			System.out.println(map.get("createTime_begin"));
+			startTime = ((String[]) map.get("createTime_begin"))[0]+" 00:00:00";
+			endTime = ((String[]) map.get("createTime_end"))[0]+" 23:59:59";
+		}
+		IPage<ConsumptRecordVo> pageList = consumptRecordService.queryPageList(page, consumptRecordVo,startTime,endTime);
 		return Result.OK(pageList);
 	}
 

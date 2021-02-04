@@ -54,7 +54,6 @@ public class MeEmployeeCommissionController extends JeecgController<MeEmployeeCo
 	/**
 	 * 分页列表查询
 	 *
-	 * @param meEmployeeCommission
 	 * @param pageNo
 	 * @param pageSize
 	 * @param req
@@ -68,7 +67,15 @@ public class MeEmployeeCommissionController extends JeecgController<MeEmployeeCo
 								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
 								   HttpServletRequest req) {
 		Page<MeEmployeeCommissionVo> page = new Page<MeEmployeeCommissionVo>(pageNo, pageSize);
-		IPage<MeEmployeeCommissionVo> pageList = meEmployeeCommissionService.queryPageList(page, meEmployeeCommissionVo);
+		Map map = req.getParameterMap();
+		String startTime = "";
+		String endTime = "";
+		if(map.get("createTime_begin") !=null){
+			System.out.println(map.get("createTime_begin"));
+			startTime = ((String[]) map.get("createTime_begin"))[0]+" 00:00:00";
+			endTime = ((String[]) map.get("createTime_end"))[0]+" 23:59:59";
+		}
+		IPage<MeEmployeeCommissionVo> pageList = meEmployeeCommissionService.queryPageList(page, meEmployeeCommissionVo,startTime,endTime);
 		return Result.OK(pageList);
 	}
 	

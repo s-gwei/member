@@ -19,5 +19,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConsumptRecordMapper extends BaseMapper<ConsumptRecord> {
 
-    IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, @Param("consumptRecordVo") ConsumptRecordVo consumptRecordVo);
+    IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page,
+                                          @Param("consumptRecordVo") ConsumptRecordVo consumptRecordVo,
+                                          @Param("startTime") String startTime,
+                                          @Param("endTime") String endTime);
 }

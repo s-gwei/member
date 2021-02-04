@@ -20,5 +20,5 @@ public interface IConsumptRecordService extends IService<ConsumptRecord> {
 
     Result addRecord(ConsumptRecord consumptRecord);
 
-    IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, ConsumptRecordVo consumptRecordVo);
+    IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, ConsumptRecordVo consumptRecordVo, String startTime, String endTime);
 }

@@ -12,12 +12,12 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('会员充值记录表')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('员工表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
+        <!-- <a-button type="primary" icon="import">导入</a-button> -->
       </a-upload>
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -89,7 +89,7 @@
       </a-table>
     </div>
 
-    <me-recharge-record-modal ref="modalForm" @ok="modalFormOk"></me-recharge-record-modal>
+    <me-mployee-modal ref="modalForm" @ok="modalFormOk"></me-mployee-modal>
   </a-card>
 </template>
 
@@ -98,19 +98,19 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import MeRechargeRecordModal from './modules/MeRechargeRecordModal'
+  import MeMployeeModal from './modules/MeMployeeModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
-    name: 'MeRechargeRecordList',
+    name: 'MeMployeeList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      MeRechargeRecordModal,
+      MeMployeeModal,
       JSuperQuery,
     },
     data () {
       return {
-        description: '会员充值记录表管理页面',
+        description: '员工表管理页面',
         // 表头
         columns: [
           {
@@ -124,24 +124,24 @@
             }
           },
           {
-            title:'会员id',
+            title:'姓名',
             align:"center",
-            dataIndex: 'memberId'
+            dataIndex: 'name'
           },
           {
-            title:'充值金额',
+            title:'电话',
             align:"center",
-            dataIndex: 'rechargeAmount'
+            dataIndex: 'phone'
           },
           {
-            title:'充值方式',
+            title:'性别',
             align:"center",
-            dataIndex: 'rechargeMode'
+            dataIndex: 'sex'
           },
           {
-            title:'销售员工id',
+            title:'地址',
             align:"center",
-            dataIndex: 'employeeId'
+            dataIndex: 'address'
           },
           {
             title: '操作',
@@ -153,11 +153,11 @@
           }
         ],
         url: {
-          list: "/member/meRechargeRecord/list",
-          delete: "/member/meRechargeRecord/delete",
-          deleteBatch: "/member/meRechargeRecord/deleteBatch",
-          exportXlsUrl: "/member/meRechargeRecord/exportXls",
-          importExcelUrl: "member/meRechargeRecord/importExcel",
+          list: "/member/meMployee/list",
+          delete: "/member/meMployee/delete",
+          deleteBatch: "/member/meMployee/deleteBatch",
+          exportXlsUrl: "/member/meMployee/exportXls",
+          importExcelUrl: "member/meMployee/importExcel",
           
         },
         dictOptions:{},
@@ -177,10 +177,10 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'memberId',text:'会员id',dictCode:''})
-        fieldList.push({type:'double',value:'rechargeAmount',text:'充值金额',dictCode:''})
-        fieldList.push({type:'double',value:'rechargeMode',text:'充值方式',dictCode:''})
-        fieldList.push({type:'string',value:'employeeId',text:'销售员工id',dictCode:''})
+        fieldList.push({type:'string',value:'name',text:'姓名',dictCode:''})
+        fieldList.push({type:'string',value:'phone',text:'电话',dictCode:''})
+        fieldList.push({type:'string',value:'sex',text:'性别',dictCode:''})
+        fieldList.push({type:'string',value:'address',text:'地址',dictCode:''})
         this.superFieldList = fieldList
       }
     }

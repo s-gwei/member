@@ -14,5 +14,5 @@ import org.jeecg.modules.member.vo.MeEmployeeCommissionVo;
  */
 public interface IMeEmployeeCommissionService extends IService<MeEmployeeCommission> {
 
-    IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo);
+    IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo, String startTime, String endTime);
 }

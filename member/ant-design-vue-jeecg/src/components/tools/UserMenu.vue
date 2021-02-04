@@ -32,7 +32,7 @@
       </a>
     </span>
     <header-notice class="action"/>
-    <a-dropdown>
+    <!-- <a-dropdown>
       <span class="action action-full ant-dropdown-link user-dropdown-menu">
         <a-avatar class="avatar" size="small" :src="getAvatar()"/>
         <span v-if="isDesktop()">欢迎您，{{ nickname() }}</span>
@@ -76,9 +76,9 @@
             <a-icon type="logout"/>
             <span>退出登录</span>
           </a>
-        </a-menu-item>-->
+        </a-menu-item>
       </a-menu>
-    </a-dropdown>
+    </a-dropdown> -->
     <span class="action">
       <a class="logout_title" href="javascript:;" @click="handleLogout">
         <a-icon type="logout"/>

@@ -4,6 +4,37 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+            <a-col :md="6" :sm="8">
+            <a-form-item label="员工姓名">
+              <!--<a-input placeholder="请输入账号查询" v-model="queryParam.username"></a-input>-->
+              <!-- <j-input placeholder="请选择客户" v-model="queryParam.username"></j-input>
+               -->
+                <a-select  name="projectNameList" v-model="queryParam.employeeId" placeholder="请选择员工" >
+                        <a-select-option value="">请选择</a-select-option>
+                        <a-select-option v-for="item in meMList" :key="item.id" :value="item.id" >{{item.name}}</a-select-option>
+                    </a-select>
+            </a-form-item>
+          </a-col>
+           <a-col :md="12" :sm="12">
+            <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-range-picker
+                style="width: 210px"
+                v-model="queryParam.createTimeRange"
+                format="YYYY-MM-DD"
+                :placeholder="['开始时间', '结束时间']"
+                @change="onDateChange"
+                @ok="onDateOk"
+              />
+            </a-form-item>
+         
+          </a-col>
+             <a-col :md="6" :sm="8">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+             
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -15,10 +46,10 @@
       <a-button @click="handleEdit(1)" type="primary" icon="plus">非会员消费</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('消费记录表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
+        <!-- <a-button type="primary" icon="import">导入</a-button> -->
       </a-upload>
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -71,7 +102,7 @@
         <span slot="action" slot-scope="text, record">
           <!-- <a @click="handleEdit(record)">编辑</a> -->
 
-          <a-divider type="vertical" />
+          <!-- <a-divider type="vertical" /> -->
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -96,11 +127,13 @@
 
 <script>
 
+  import { filterObj } from '@/utils/util'
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import ConsumptRecordModal from './modules/ConsumptRecordModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
+  import { httpAction, getAction } from '@/api/manage'
 
   export default {
     name: 'ConsumptRecordList',
@@ -111,6 +144,8 @@
     },
     data () {
       return {
+        
+        meMList:[],
         description: '消费记录表管理页面',
         // 表头
         columns: [
@@ -168,6 +203,7 @@
           deleteBatch: "/member/consumptRecord/deleteBatch",
           exportXlsUrl: "/member/consumptRecord/exportXls",
           importExcelUrl: "member/consumptRecord/importExcel",
+          queryEmployInfo:"member/meMployee/queryEmployInfo",
           
         },
         dictOptions:{},
@@ -176,6 +212,7 @@
     },
     created() {
     this.getSuperFieldList();
+    this.queryEmployInfo();
     },
     computed: {
       importExcelUrl: function(){
@@ -183,6 +220,37 @@
       },
     },
     methods: {
+        //查询员工信息
+      queryEmployInfo(){
+            getAction(this.url.queryEmployInfo).then((res)=>{
+           console.info(res);
+           this.meMList = res.result;
+           console.info(this.meMList);
+          });
+
+      },
+            getQueryParams(){
+            console.info(this.queryParam);
+        var param = Object.assign({}, this.queryParam,this.isorter);
+        param.field = this.getQueryField();
+        param.pageNo = this.ipagination.current;
+        param.pageSize = this.ipagination.pageSize;
+        delete param.createTimeRange; // 时间参数不传递后台
+        if (this.superQueryParams) {
+          param['superQueryParams'] = encodeURI(this.superQueryParams)
+          param['superQueryMatchType'] = this.superQueryMatchType
+        }
+        return filterObj(param);
+      },
+     //查询时间段
+      onDateChange: function (value, dateString) {
+        console.log(dateString[0],dateString[1]);
+        this.queryParam.createTime_begin=dateString[0];
+        this.queryParam.createTime_end=dateString[1];
+      },
+      onDateOk(value) {
+        console.log(value);
+      },
       initDictConfig(){
       },
       getSuperFieldList(){

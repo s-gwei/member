@@ -18,20 +18,20 @@
               <a-input-number v-decorator="['balance']" placeholder="请输入充值金额" style="width: 100%" />
             </a-form-item>
           </a-col>
-               <a-col :span="12">
-         <a-form-item label="支付方式" >
-                    <a-select  name="projectNameList" v-decorator="['consumtWay']" placeholder="请选择支付方式">
+           <a-col :span="24">
+         <a-form-item label="支付方式"  style="display: flex; position: relative; left: 90px">
+                    <a-select style="width: 350px" name="projectNameList" v-decorator="['consumtWay']" placeholder="请选择支付方式">
                         <a-select-option value="">请选择</a-select-option>
                         <a-select-option v-for="item in payWay" :key="item.name" :value="item.name"> {{item.name}}</a-select-option>
                     </a-select>
             </a-form-item>
          </a-col>
-           <a-col :span="12">
+         <a-col :span="24">
             <!-- <a-form-item label="员工表下拉">
               <j-dict-select-tag v-model="employee" placeholder="请选择用户" v-dictCode="['id']" />
             </a-form-item> -->
-            <a-form-item label="充值员工">
-                    <a-select  name="projectNameList" v-decorator="['employeeId']" placeholder="请选择员工">
+            <a-form-item label="充值员工"  style="display: flex; position: relative; left: 90px">
+                    <a-select style="width: 350px" name="projectNameList" v-decorator="['employeeId']" placeholder="请选择员工">
                         <a-select-option value="">请选择</a-select-option>
                         <a-select-option v-for="item in employee" :value="item.id" :key="item.id"> {{item.name}}</a-select-option>
                     </a-select>

@@ -4,7 +4,7 @@
       <a-form :form="form" slot="detail">
         <a-row>
           <a-col :span="24" v-show=false >
-            <a-form-item label="会员id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-form-item label="会员id" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show = false>
               <a-input v-decorator="['memberId']" placeholder="请输入会员id"  ></a-input>
             </a-form-item>
           </a-col>
@@ -24,8 +24,8 @@
             </a-form-item>
           </a-col> -->
           <a-col :md="14" :sm="16">
-           <a-form-item label="支付方式" v-show="flag">
-                    <a-select  name="projectNameList" v-decorator="['consumtWay']" placeholder="请选择支付方式">
+           <a-form-item label="支付方式" v-show="flag" style="display: flex; position: relative; left: 90px">
+                    <a-select style="width: 350px" name="projectNameList" v-decorator="['consumtWay']" placeholder="请选择支付方式">
                         <a-select-option value="">请选择</a-select-option>
                         <a-select-option v-for="item in payWay" :key="item.name" :value="item.name"> {{item.name}}</a-select-option>
                     </a-select>
@@ -33,8 +33,8 @@
           </a-col> 
           
              <a-col :md="14" :sm="16">
-           <a-form-item label="项目名称">
-                    <a-select  name="projectNameList" v-decorator="['consumptionItemsIdd']" placeholder="请选择消费项目">
+           <a-form-item label="项目名称" style="display: flex; position: relative; left: 90px">
+                    <a-select  style="width: 350px" name="projectNameList" v-decorator="['consumptionItemsIdd']" placeholder="请选择消费项目">
                         <a-select-option value="">请选择</a-select-option>
                         <a-select-option v-for="item in itemsList" :key="item.id" :value="item.id"> {{item.content}}(原价/{{item.oriPrice}}元,会员价/{{item.memberPrice}})</a-select-option>
                     </a-select>
@@ -42,15 +42,15 @@
            
           </a-col> 
          
-          <a-col :span="24" v-show=false >
+          <!-- <a-col :span="24" v-show=false >
             <a-form-item label="员工id" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['employeeId']" placeholder="请输入员工id"  ></a-input>
             </a-form-item>
-          </a-col>
+          </a-col> -->
           <a-col :md="14" :sm="16">
            
-            <a-form-item label="服务人员">
-                    <a-select  name="projectNameList" v-decorator="['employeeId']" placeholder="请选择服务人员">
+            <a-form-item label="服务人员" style="display: flex; position: relative; left: 90px">
+                    <a-select  style="width: 350px" name="projectNameList" v-decorator="['employeeId']" placeholder="请选择服务人员">
                         <a-select-option value="">请选择</a-select-option>
                         <a-select-option v-for="item in employeeList" :key="item.id" :value="item.id"> {{item.name}}</a-select-option>
                     </a-select>
@@ -188,7 +188,7 @@
               if(res.success){
                   res.result.memberId = res.result.id;
                   this.form.setFieldsValue(pick(res.result,'memberId','name'))
-                  this.$message.success(res.message);
+                  // this.$message.success(res.message);
               }else{
                   this.$message.warning(res.message+";请输入完整手机号");
               }

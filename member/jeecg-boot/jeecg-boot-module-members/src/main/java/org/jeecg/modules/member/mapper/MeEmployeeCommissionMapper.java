@@ -19,5 +19,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MeEmployeeCommissionMapper extends BaseMapper<MeEmployeeCommission> {
 
-    IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo);
+    IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page,
+                                                @Param("meEmployeeCommissionVo") MeEmployeeCommissionVo meEmployeeCommissionVo,
+                                                @Param("startTime") String startTime,
+                                                @Param("endTime") String endTime);
 }

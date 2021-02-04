@@ -23,8 +23,14 @@ public class MeEmployeeCommissionServiceImpl extends ServiceImpl<MeEmployeeCommi
 
     @Autowired
     MeEmployeeCommissionMapper meEmployeeCommissionMapper;
+
     @Override
-    public IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo) {
-        return meEmployeeCommissionMapper.queryPageList(page,meEmployeeCommissionVo);
+    public IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo, String startTime, String endTime) {
+        return meEmployeeCommissionMapper.queryPageList(page,meEmployeeCommissionVo,startTime,endTime);
     }
+
+//    @Override
+//    public IPage<MeEmployeeCommissionVo> queryPageList(Page<MeEmployeeCommissionVo> page, MeEmployeeCommissionVo meEmployeeCommissionVo) {
+//        return meEmployeeCommissionMapper.queryPageList(page,meEmployeeCommissionVo);
+//    }
 }

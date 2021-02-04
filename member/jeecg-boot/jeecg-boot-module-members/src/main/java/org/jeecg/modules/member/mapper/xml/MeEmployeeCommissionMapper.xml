@@ -30,6 +30,13 @@
         LEFT JOIN me_mployee ON me_employee_commission.employee_id = me_mployee.id
         LEFT JOIN consumption_items ON me_employee_commission.consumption_items_id = consumption_items.id
         LEFT JOIN me_member ON me_employee_commission.member_id = me_member.id
+        where 1=1
+        <if test="meEmployeeCommissionVo.employeeId != null  and  meEmployeeCommissionVo.employeeId != '' " >
+            and me_employee_commission.employee_id=#{meEmployeeCommissionVo.employeeId}
+        </if>
+        <if test="startTime != null  and  startTime != '' " >
+           and (me_employee_commission.create_time between  #{startTime} and #{endTime})
+        </if>
         ORDER BY
         me_employee_commission.create_time DESC
 

@@ -26,11 +26,15 @@
         LEFT JOIN me_member mm ON mcr.member_id = mm.id
         LEFT JOIN consumption_items mci ON mcr.consumption_items_idd = mci.id
         LEFT JOIN me_mployee me ON mcr.employee_id = me.id
+        where 1=1
         <if test=" consumptRecordVo.memberId != null and  consumptRecordVo.memberId!= 0">
             and mm.id = #{consumptRecordVo.memberId}
         </if>
         <if test="consumptRecordVo.employeeId != null and consumptRecordVo.employeeId!= 0">
             and mcr.employee_id  = #{consumptRecordVo.employeeId}
+        </if>
+        <if test="startTime != null  and  startTime != '' " >
+            and (mcr.create_time between  #{startTime} and #{endTime})
         </if>
 
     </select>

@@ -17,13 +17,13 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 Jeecg-Boot 企业级快速开发平台</span>
+      <span v-if="device === 'desktop'">欢迎进入可视采耳会员管理平台</span>
       <span v-else>Jeecg-Boot</span>
 
       <user-menu :theme="theme"/>
     </div>
     <!-- 顶部导航栏模式 -->
-    <div v-else :class="['top-nav-header-index', theme]">
+    <!-- <div v-else :class="['top-nav-header-index', theme]">
       <div class="header-index-wide">
         <div class="header-index-left" :style="topMenuStyle.headerIndexLeft">
           <logo class="top-nav-header" :show-title="device !== 'mobile'" :style="topMenuStyle.topNavHeader"/>
@@ -41,7 +41,7 @@
         </div>
         <user-menu class="header-index-right" :theme="theme" :style="topMenuStyle.headerIndexRight"/>
       </div>
-    </div>
+    </div> -->
   </a-layout-header>
 </template>
 

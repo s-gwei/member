@@ -96,7 +96,12 @@ public class ConsumptRecordServiceImpl extends ServiceImpl<ConsumptRecordMapper,
     }
 
     @Override
-    public IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, ConsumptRecordVo consumptRecordVo) {
-        return consumptRecordMapper.queryPageList(page,consumptRecordVo);
+    public IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, ConsumptRecordVo consumptRecordVo, String startTime, String endTime) {
+        return consumptRecordMapper.queryPageList(page,consumptRecordVo,startTime,endTime);
     }
+
+//    @Override
+//    public IPage<ConsumptRecordVo> queryPageList(Page<ConsumptRecordVo> page, ConsumptRecordVo consumptRecordVo) {
+//        return consumptRecordMapper.queryPageList(page,consumptRecordVo);
+//    }
 }
