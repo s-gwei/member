@@ -134,7 +134,7 @@
             dataIndex: 'phone'
           },
           {
-            title:'充值金额',
+            title:'余额',
             align:"center",
             dataIndex: 'balance'
           },

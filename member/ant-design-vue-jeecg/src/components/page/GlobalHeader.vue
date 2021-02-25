@@ -17,7 +17,7 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入可视采耳会员管理平台</span>
+      <span v-if="device === 'desktop'">欢迎进入简爱采耳头疗馆会员管理平台</span>
       <span v-else>Jeecg-Boot</span>
 
       <user-menu :theme="theme"/>
